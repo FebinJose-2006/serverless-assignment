@@ -3,83 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Serverless Website</title>
+    <title>Febin | Serverless UI</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            margin: 0;
-            padding: 0;
-            color: white;
-            text-align: center;
+        :root {
+            --bg-color: #0f172a;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.5);
         }
 
-        .container {
-            margin-top: 100px;
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Animated Mesh Background */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, #2e1065 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, #1e3a8a 0%, transparent 40%);
+            animation: pulseBg 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Entrance Animation for the Card */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            
+            /* Initial state for entrance */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-box {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            margin: auto;
-            width: 60%;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            background: #ff6600;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
+            color: #94a3b8;
             font-size: 16px;
+            margin: 15px 0 30px;
+        }
+
+        /* Sleek Animated Button */
+        .btn {
+            position: relative;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         .btn:hover {
-            background: #ff4500;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-glow);
+            letter-spacing: 1px;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: rgba(255,255,255,0.2);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            left: -100%;
+        }
+
+        .btn:hover::after {
+            left: 100%;
         }
 
         footer {
-            margin-top: 100px;
-            font-size: 14px;
-            opacity: 0.7;
+            position: absolute;
+            bottom: 20px;
+            font-size: 12px;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            box-shadow: 0 0 8px #10b981;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <div class="card">
-            <h1>🚀 Hello from Cloudflare Pages</h1>
-            <p>This is my serverless deployment assignment.</p>
-            <p>Deployed using Cloudflare Pages (Serverless Platform)</p>
+    <div class="bg-animate"></div>
 
-            <button class="btn" onclick="showMessage()">Click Me</button>
+    <div class="card">
+        <div class="icon-box">🚀</div>
+        <h1>Serverless Edge</h1>
+        <p>Deployed via Cloudflare Pages</p>
+        
+        <div style="margin-bottom: 20px; font-size: 14px; color: #10b981;">
+            <span class="status-dot"></span> System Online
         </div>
 
-        <footer>
-            <p>Created by Febin Jose | BCA Student</p>
-        </footer>
+        <button class="btn" onclick="fireSuccess()">Launch Demo</button>
     </div>
 
+    <footer>
+        CREATED BY FEBIN JOSE • BCA STUDENT
+    </footer>
+
     <script>
-        function showMessage() {
-            alert("🎉 Serverless Website is Working!");
+        function fireSuccess() {
+            const btn = document.querySelector('.btn');
+            btn.innerHTML = "Processing...";
+            
+            setTimeout(() => {
+                btn.innerHTML = "Success! ✨";
+                btn.style.background = "#10b981";
+                btn.style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.5)";
+                alert("🎉 Serverless site validated successfully!");
+            }, 800);
         }
     </script>
 
