@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Serverless Website</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin: auto;
+            width: 60%;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #ff6600;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: #ff4500;
+        }
+
+        footer {
+            margin-top: 100px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Hello from Cloudflare Pages </h1>
-    <p>This is my serverless deployment assignment.</p>
+
+    <div class="container">
+        <div class="card">
+            <h1>🚀 Hello from Cloudflare Pages</h1>
+            <p>This is my serverless deployment assignment.</p>
+            <p>Deployed using Cloudflare Pages (Serverless Platform)</p>
+
+            <button class="btn" onclick="showMessage()">Click Me</button>
+        </div>
+
+        <footer>
+            <p>Created by Febin Jose | BCA Student</p>
+        </footer>
+    </div>
+
+    <script>
+        function showMessage() {
+            alert("🎉 Serverless Website is Working!");
+        }
+    </script>
+
 </body>
-</html>  
+</html>
