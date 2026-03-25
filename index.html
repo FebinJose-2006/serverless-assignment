@@ -2,156 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Premium Event Registration</title>
+    <title>Event Horizon | Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
             --primary: #4facfe;
             --secondary: #00f2fe;
-            --bg-dark: #0f172a;
+            --bg-dark: #070b14;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
             background: var(--bg-dark);
-            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            min-height: 100vh;
             color: white;
-        }
-
-        /* Background Animation */
-        .circles {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
             overflow: hidden;
-            z-index: -1;
-        }
-
-        .circles li {
-            position: absolute;
-            list-style: none;
-            width: 20px; height: 20px;
-            background: rgba(255,255,255,0.1);
-            animation: animate 25s linear infinite;
-            bottom: -150px;
-        }
-
-        @keyframes animate {
-            0% { transform: translateY(0) rotate(0); opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
         }
 
         .container {
             width: 90%;
-            max-width: 420px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(15px);
+            max-width: 400px;
+            background: var(--glass);
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        h2 {
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
             text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 { font-size: 24px; text-align: center; margin: 0 0 5px; font-weight: 600; }
+        p.subtitle { text-align: center; color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+
+        /* Floating Input Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
+            padding: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        button {
+        input:focus {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.07);
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.2);
+        }
+
+        /* Submit Button Enhancement */
+        .submit-btn {
             width: 100%;
             padding: 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             border: none;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 16px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
         }
 
-        button:hover {
-            opacity: 0.9;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(79, 172, 254, 0.4);
         }
+
+        .submit-btn:active { transform: translateY(0); }
+
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .admin-link:hover { color: var(--primary); }
 
         #message {
+            margin-top: 20px;
+            font-size: 14px;
+            min-height: 20px;
             text-align: center;
-            margin-top: 15px;
+            font-weight: 500;
         }
 
-        footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: rgba(255,255,255,0.5);
-        }
+        /* Success State */
+        .success-accent { color: #10b981 !important; }
     </style>
 </head>
 
 <body>
 
-<!-- Animated Background -->
-<ul class="circles">
-    <li></li><li></li><li></li><li></li><li></li>
-    <li></li><li></li><li></li><li></li><li></li>
-</ul>
-
-<header>
-    <h1>🎉 Event Registration</h1>
-    <p>Your journey begins here</p>
-</header>
-
 <div class="container">
-    <h2>Join the Future</h2>
+    <span class="logo">🚀</span>
+    <h1>Event Registration</h1>
+    <p class="subtitle">Secure your spot for the 2026 Summit</p>
 
     <form id="form">
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="email" id="email" placeholder="Email Address" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <div class="input-group">
+            <input type="text" id="name" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email Address" required>
+        </div>
+        <div class="input-group">
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+        </div>
 
-        <button type="submit" id="submitBtn">Secure My Spot</button>
+        <button type="submit" id="submitBtn" class="submit-btn">Complete Registration</button>
     </form>
 
-    <button onclick="showUsers()">📊 View Registrations</button>
-
     <p id="message"></p>
-</div>
 
-<footer>
-    © 2026 EVENT SYSTEM | DESIGNED BY FEBIN JOSE
-</footer>
+    <a href="#" class="admin-link" onclick="goToAdmin()">Access Admin Panel 🔐</a>
+</div>
 
 <script>
     const form = document.getElementById("form");
     const msg = document.getElementById("message");
     const btn = document.getElementById("submitBtn");
-
-    // Load users from localStorage
-    let users = JSON.parse(localStorage.getItem("users")) || [];
 
     form.addEventListener("submit", function(e) {
         e.preventDefault();
@@ -160,54 +174,54 @@
         const email = document.getElementById("email").value;
         const phone = document.getElementById("phone").value;
 
-        btn.innerText = "Processing...";
-        btn.style.opacity = "0.7";
+        // Visual Feedback
+        btn.innerHTML = '<span style="opacity: 0.5">Syncing...</span>';
+        btn.disabled = true;
+
+        const userData = {
+            name,
+            email,
+            phone,
+            time: new Date().toLocaleString()
+        };
 
         setTimeout(() => {
-            const userData = {
-                name,
-                email,
-                phone,
-                time: new Date().toLocaleString()
-            };
-
-            // Save to localStorage (database simulation)
+            // Save Data
+            let users = JSON.parse(localStorage.getItem("users")) || [];
             users.push(userData);
             localStorage.setItem("users", JSON.stringify(users));
 
-            // Confetti 🎉
+            // Confetti Explosion
             confetti({
                 particleCount: 150,
                 spread: 70,
-                origin: { y: 0.6 },
+                origin: { y: 0.7 },
                 colors: ['#4facfe', '#00f2fe', '#ffffff']
             });
 
-            // Success message
-            msg.style.color = "#00f2fe";
-            msg.innerText = "Welcome aboard, " + name + "! ✨";
-
-            // Button update
-            btn.innerText = "Registered!";
+            // Update UI
+            msg.className = "success-accent";
+            msg.innerHTML = `Welcome, <b>${name}</b>! Registration Complete.`;
+            
+            btn.innerHTML = "Success ✅";
             btn.style.background = "#10b981";
-            btn.style.opacity = "1";
+            btn.style.boxShadow = "0 10px 20px rgba(16, 185, 129, 0.3)";
 
             form.reset();
+            
+            // Revert button after 3 seconds
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = "Complete Registration";
+                btn.style.background = "linear-gradient(135deg, var(--primary), var(--secondary))";
+                btn.style.boxShadow = "0 10px 20px rgba(79, 172, 254, 0.3)";
+            }, 3000);
 
-            console.log("📦 API Data:", users);
-
-        }, 1000);
+        }, 1200);
     });
 
-    // REST API simulation
-    function getUsersAPI() {
-        return JSON.parse(localStorage.getItem("users")) || [];
-    }
-
-    // View users
-    function showUsers() {
-        const data = getUsersAPI();
-        alert(JSON.stringify(data, null, 2));
+    function goToAdmin() {
+        window.location.href = "admin.html";
     }
 </script>
 
